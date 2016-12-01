@@ -2,11 +2,24 @@ package sample;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import javafx.scene.Camera;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
@@ -62,6 +75,26 @@ public class View extends Application {
         Group p = new Group();
         Scene scene = new Scene(p);
 
+        // Create the ButtonBar instance
+        ButtonBar buttonBar = new ButtonBar();
+
+        // Create the buttons to go into the ButtonBar
+        Button PButton = new Button("PRISE");
+        ButtonBar.setButtonData(PButton, ButtonData.YES);
+
+        Button GButton = new Button("GARDE");
+        ButtonBar.setButtonData(GButton, ButtonData.YES);
+
+        Button GSCButton = new Button("GARDE SANS CHIEN");
+        ButtonBar.setButtonData(GSCButton, ButtonData.YES);
+
+        Button GACButton = new Button("GARDE CONTRE CHIEN");
+        ButtonBar.setButtonData(GACButton, ButtonData.YES);
+
+        // Add buttons to the ButtonBar
+        buttonBar.getButtons().addAll(PButton, GButton);
+        buttonBar.getButtons().addAll(GSCButton, GACButton);
+
 
 
         Camera camera = new PerspectiveCamera(true);
@@ -83,12 +116,18 @@ public class View extends Application {
         JeuCarte jeu = new JeuCarte();
         GameBoard board = new GameBoard();
 
-       // p.getChildren().addAll(board.getNodes());
+
+
+        //p.getChildren().addAll(board.getNodes());
 
         for(Carte e : jeu)
         {
             p.getChildren().addAll(e.getNodes());
         }
+
+        p.getChildren().addAll(buttonBar);
+
+
 
         stage.show();
 
