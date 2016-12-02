@@ -12,67 +12,41 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.control.ButtonBar;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
 
 import Model.Carte;
 import Model.JeuCarte;
 import Model.Player;
-
-import java.awt.event.MouseEvent;
+import Controller.Controller;
 
 public class View extends Application {
 
-    DropShadow shadow = new DropShadow();
 
     //main timeline
     private Timeline timeline, timelineFlip, timelineSort;
 
     //variable for storing actual frame
-    private Integer cpt = 1;
-    private Integer cptC = 1;
     private Integer cptF = 0;
-    private Integer cptFC = 0;
 
-    int x = 600-100/2;
-    int y = 300-170/2;
-    int transX = 110;
-    int transY = 400;
-    int player = 1;
-    int pos = 0;
-
-
-    public void distribution(JeuCarte jeu, Player player, int x, int y){
-        for(int j=pos; j<pos+3; j++){
-            jeu.get(j).move(x*cpt, y).play();
-            player.ajoutCarte(jeu.get(j));
-            if(player.player == 1)
-                cpt++;
-        }
-
-        pos += 3;
-
-        //reset counter
-        if(player.player == 1 && cpt>9)
-        {
-            cpt = 1;
-            transY += 200;
-        }
-    }
-
+    int x = 1800;
+    int y = 600;
 
     @Override public void start(Stage stage) {
 
+        Controller controller = new Controller();
 
-        Player me = new Model.Player(1);
-        Player player2 = new Model.Player(2);
-        Player player3 = new Model.Player(3);
-        Player player4 = new Model.Player(4);
-        Player dog = new Model.Player(5);
+
+        Player me = controller.getMe();
+        Player player2 = controller.getPlayer2();
+        Player player3 = controller.getPlayer3();
+        Player player4 = controller.getPlayer4();
+        Player dog = controller.getDog();
 
 
         Group p = new Group();
@@ -128,79 +102,40 @@ public class View extends Application {
 
 
         stage.setScene(scene);
-        stage.setWidth(1800);
-        stage.setHeight(600);
+        stage.setWidth(x);
+        stage.setHeight(y);
         stage.setTitle("Let's play Tarot!");
 
-        JeuCarte jeu = new JeuCarte();
-
-
+        JeuCarte cardGame = controller.getCardGame();
 
         //p.getChildren().addAll(board.getNodes());
 
-        for(Carte e : jeu)
+        for(Carte e : cardGame)
         {
             p.getChildren().addAll(e.getNodes());
         }
 
-
-
         stage.show();
 
-        //create a timeline for moving the circle
         timeline = new Timeline();
         timeline.setCycleCount(30);
 
         //create a keyFrame, the keyValue is reached at time 2s
         Duration duration = Duration.millis(300);
         //one can add a specific action when the keyframe is reached
-        EventHandler onFinished = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                switch(player){
-                    case 1:
-                        distribution(jeu, me, transX, transY);
-                        player = 5;
-                        break;
-                    case 2:
-                        distribution(jeu, player2, transX+2000, transY);
-                        player = 3;
-                        break;
-                    case 3:
-                        distribution(jeu, player3, transX, transY-2000);
-                        player = 4;
-                        break;
-                    case 4:
-                        distribution(jeu, player4, transX-2000, transY);
-                        player = 1;
-                        break;
-                    case 5:
-                        jeu.get(pos).move(transX+transX*cptC, 0).play();
-                        dog.ajoutCarte(jeu.get(pos));
-                        cptC += 1;
-                        player = 2;
-                        pos += 1;
-                        break;
-                }
-            }
-        };
 
-        //create a timeline for moving the circle
+
+        EventHandler onFinished = controller.distribute;
+
         timelineFlip = new Timeline();
         timelineFlip.setCycleCount(24);
 
         //create a keyFrame, the keyValue is reached at time 2s
         Duration durationFlip = Duration.millis(100);
         //one can add a specific action when the keyframe is reached
-        EventHandler onFinishedFlip = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                if(cptF<18){
-                    me.getMesCartes().get(cptF).flip().play();
-                    cptF++;
-                }
-            }
-        };
 
-        //create a timeline for moving the circle
+        EventHandler onFinishedFlip = controller.flip;
+
         timelineSort = new Timeline();
         timelineSort.setCycleCount(1);
 
@@ -208,6 +143,8 @@ public class View extends Application {
         //create a keyFrame, the keyValue is reached at time 2s
         Duration durationSort = Duration.millis(500);
         //one can add a specific action when the keyframe is reached
+
+
         EventHandler onFinishedSort = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
 
@@ -215,11 +152,11 @@ public class View extends Application {
 
                 int j = 0;
 
-                for(Model.Carte e: jeu){
+                for(Model.Carte e: cardGame){
                     for(int i=0; i<me.getMesCartes().size(); i++){
 
                         if(e.id() == me.getMesCartes().get(i).id()){
-                            jeu.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
+                            cardGame.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
                         }
                     }
                     j++;
@@ -229,7 +166,6 @@ public class View extends Application {
                 p.getChildren().add(GACButton);
                 p.getChildren().add(GSCButton);
                 stage.show();
-
             }
 
         };
@@ -246,6 +182,13 @@ public class View extends Application {
             }
         });
 
+        for(int i=0; i<p.getChildren().size(); i++){
+            p.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent me) {
+
+                }
+            });
+        }
 
 
 

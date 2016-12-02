@@ -43,8 +43,6 @@ public class Player {
         }
     }
 
-
-
     public ArrayList<Carte> getMesCartes() {
         return mesCartes;
     }
