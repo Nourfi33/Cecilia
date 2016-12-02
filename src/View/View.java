@@ -12,7 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.DropShadow;
-
+import javafx.scene.control.ButtonBar;
+import javafx.scene.input.MouseEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ import Model.Carte;
 import Model.JeuCarte;
 import Model.Player;
 import Controller.Controller;
+
 
 public class View extends Application {
 
@@ -51,40 +53,41 @@ public class View extends Application {
 
         Group p = new Group();
         Scene scene = new Scene(p);
+        scene.getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
         // Create the ButtonBar instance
         Font font = new Font("Arial", 28);
 
         // Create the buttons to go into the ButtonBar
         Button PButton = new Button("PRISE DU CHIEN");
-        PButton.setMinSize(200,120);
-        PButton.setMaxSize(200,120);
-        PButton.setTranslateX(-200);
+        PButton.setMinSize(400,120);
+        PButton.setMaxSize(400,120);
+        PButton.setTranslateX(-300);
         PButton.setTranslateY(-300);
         PButton.setFont(font);
         PButton.setVisible(true);
 
 
         Button GButton = new Button("GARDE");
-        GButton.setMinSize(200,120);
-        GButton.setMaxSize(200,120);
-        GButton.setTranslateX(0);
+        GButton.setMinSize(400,120);
+        GButton.setMaxSize(400,120);
+        GButton.setTranslateX(100);
         GButton.setTranslateY(-300);
         GButton.setFont(font);
         GButton.setVisible(true);
 
         Button GSCButton = new Button("GARDE SANS CHIEN");
-        GSCButton.setMinSize(200,120);
-        GSCButton.setMaxSize(200,120);
-        GSCButton.setTranslateX(200);
+        GSCButton.setMinSize(400,120);
+        GSCButton.setMaxSize(400,120);
+        GSCButton.setTranslateX(500);
         GSCButton.setTranslateY(-300);
         GSCButton.setFont(font);
         GSCButton.setVisible(true);
 
         Button GACButton = new Button("GARDE CONTRE CHIEN");
-        GACButton.setMinSize(200,120);
-        GACButton.setMaxSize(200,120);
-        GACButton.setTranslateX(400);
+        GACButton.setMinSize(400,120);
+        GACButton.setMaxSize(400,120);
+        GACButton.setTranslateX(900);
         GACButton.setTranslateY(-300);
         GACButton.setFont(font);
         GACButton.setVisible(true);
@@ -121,7 +124,7 @@ public class View extends Application {
         timeline.setCycleCount(30);
 
         //create a keyFrame, the keyValue is reached at time 2s
-        Duration duration = Duration.millis(300);
+        Duration duration = Duration.millis(400);
         //one can add a specific action when the keyframe is reached
 
 
@@ -182,9 +185,10 @@ public class View extends Application {
             }
         });
 
-        for(int i=0; i<p.getChildren().size(); i++){
+        for(int i=0; i<p.getChildren().size(); i++)
+        {
             p.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent me) {
+                public void handle(MouseEvent mouseE) {
 
                 }
             });
