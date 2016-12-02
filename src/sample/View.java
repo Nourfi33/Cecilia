@@ -2,6 +2,7 @@ package sample;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Camera;
@@ -15,7 +16,9 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
+import javafx.scene.effect.DropShadow;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,6 +30,8 @@ import javafx.event.EventHandler;
 
 
 public class View extends Application {
+
+    DropShadow shadow = new DropShadow();
 
     //main timeline
     private Timeline timeline, timelineFlip, timelineSort;
@@ -74,27 +79,58 @@ public class View extends Application {
 
         Group p = new Group();
         Scene scene = new Scene(p);
+        scene.getStylesheets().add("style.css");
 
         // Create the ButtonBar instance
+        Font font = new Font("Arial", 28);
         ButtonBar buttonBar = new ButtonBar();
+        buttonBar.setLayoutX(-250.0);
+        buttonBar.setLayoutY(-300);
+
+        buttonBar.setPrefWidth(1200);
+        buttonBar.setPrefHeight(100);
 
         // Create the buttons to go into the ButtonBar
         Button PButton = new Button("PRISE");
         ButtonBar.setButtonData(PButton, ButtonData.YES);
+        PButton.setMinSize(200,120);
+        PButton.setMaxSize(200,120);
+        //bouton.setTranslateX(-200);
+        PButton.setTranslateY(-300);
+        PButton.setFont(font);
+        PButton.setVisible(true);
+
 
         Button GButton = new Button("GARDE");
         ButtonBar.setButtonData(GButton, ButtonData.YES);
+        GButton.setMinSize(200,120);
+        GButton.setMaxSize(200,120);
+        //bouton.setTranslateX(-200);
+        GButton.setTranslateY(-300);
+        GButton.setFont(font);
+        GButton.setVisible(true);
 
         Button GSCButton = new Button("GARDE SANS CHIEN");
         ButtonBar.setButtonData(GSCButton, ButtonData.YES);
+        GSCButton.setMinSize(200,120);
+        GSCButton.setMaxSize(200,120);
+        //bouton.setTranslateX(-200);
+        GSCButton.setTranslateY(-300);
+        GSCButton.setFont(font);
+        GSCButton.setVisible(true);
 
         Button GACButton = new Button("GARDE CONTRE CHIEN");
         ButtonBar.setButtonData(GACButton, ButtonData.YES);
+        GACButton.setMinSize(200,120);
+        GACButton.setMaxSize(200,120);
+        //bouton.setTranslateX(-200);
+        GACButton.setTranslateY(-300);
+        GACButton.setFont(font);
+        GACButton.setVisible(true);
 
         // Add buttons to the ButtonBar
         buttonBar.getButtons().addAll(PButton, GButton);
         buttonBar.getButtons().addAll(GSCButton, GACButton);
-
 
 
         Camera camera = new PerspectiveCamera(true);
