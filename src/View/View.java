@@ -250,7 +250,6 @@ public class View extends Application {
 
 
 
-
         KeyFrame keyFrame = new KeyFrame(duration, onFinished);
         KeyFrame keyFrameFlip = new KeyFrame(durationFlip, onFinishedFlip);
         KeyFrame keyFrameSort = new KeyFrame(durationSort, onFinishedSort);
