@@ -83,54 +83,42 @@ public class View extends Application {
 
         // Create the ButtonBar instance
         Font font = new Font("Arial", 28);
-        ButtonBar buttonBar = new ButtonBar();
-        buttonBar.setLayoutX(-250.0);
-        buttonBar.setLayoutY(-300);
-
-        buttonBar.setPrefWidth(1200);
-        buttonBar.setPrefHeight(100);
 
         // Create the buttons to go into the ButtonBar
-        Button PButton = new Button("PRISE");
-        ButtonBar.setButtonData(PButton, ButtonData.YES);
+        Button PButton = new Button("PRISE DU CHIEN");
         PButton.setMinSize(200,120);
         PButton.setMaxSize(200,120);
-        //bouton.setTranslateX(-200);
+        PButton.setTranslateX(-200);
         PButton.setTranslateY(-300);
         PButton.setFont(font);
         PButton.setVisible(true);
 
 
         Button GButton = new Button("GARDE");
-        ButtonBar.setButtonData(GButton, ButtonData.YES);
         GButton.setMinSize(200,120);
         GButton.setMaxSize(200,120);
-        //bouton.setTranslateX(-200);
+        GButton.setTranslateX(0);
         GButton.setTranslateY(-300);
         GButton.setFont(font);
         GButton.setVisible(true);
 
         Button GSCButton = new Button("GARDE SANS CHIEN");
-        ButtonBar.setButtonData(GSCButton, ButtonData.YES);
         GSCButton.setMinSize(200,120);
         GSCButton.setMaxSize(200,120);
-        //bouton.setTranslateX(-200);
+        GSCButton.setTranslateX(200);
         GSCButton.setTranslateY(-300);
         GSCButton.setFont(font);
         GSCButton.setVisible(true);
 
         Button GACButton = new Button("GARDE CONTRE CHIEN");
-        ButtonBar.setButtonData(GACButton, ButtonData.YES);
         GACButton.setMinSize(200,120);
         GACButton.setMaxSize(200,120);
-        //bouton.setTranslateX(-200);
+        GACButton.setTranslateX(400);
         GACButton.setTranslateY(-300);
         GACButton.setFont(font);
         GACButton.setVisible(true);
 
         // Add buttons to the ButtonBar
-        buttonBar.getButtons().addAll(PButton, GButton);
-        buttonBar.getButtons().addAll(GSCButton, GACButton);
 
 
         Camera camera = new PerspectiveCamera(true);
@@ -161,7 +149,10 @@ public class View extends Application {
             p.getChildren().addAll(e.getNodes());
         }
 
-        p.getChildren().addAll(buttonBar);
+        p.getChildren().add(PButton);
+        p.getChildren().add(GButton);
+        p.getChildren().add(GACButton);
+        p.getChildren().add(GSCButton);
 
 
 
