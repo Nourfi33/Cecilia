@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.control.ButtonBar;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
@@ -36,12 +37,14 @@ public class View extends Application {
     private Integer cptC = 1;
     private Integer cptF = 0;
     private Integer cptFC = 0;
+
     int x = 600-100/2;
     int y = 300-170/2;
     int transX = 110;
     int transY = 400;
     int player = 1;
     int pos = 0;
+
 
     public void distribution(JeuCarte jeu, Player player, int x, int y){
         for(int j=pos; j<pos+3; j++){
@@ -74,7 +77,6 @@ public class View extends Application {
 
         Group p = new Group();
         Scene scene = new Scene(p);
-        scene.getStylesheets().add("style.css");
 
         // Create the ButtonBar instance
         Font font = new Font("Arial", 28);
@@ -114,15 +116,12 @@ public class View extends Application {
         GACButton.setVisible(true);
 
 
-
-
-
         Camera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-2000);
+        camera.setTranslateZ(-1700);
         camera.setTranslateX(200);
-        camera.setTranslateY(1000);
+        camera.setTranslateY(900);
         camera.setNearClip(0.2);
-        camera.setFarClip(3000.0);
+        camera.setFarClip(2000.0);
         camera.setRotationAxis(Rotate.X_AXIS);
         camera.setRotate(20);
         scene.setCamera(camera);
