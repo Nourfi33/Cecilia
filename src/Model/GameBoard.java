@@ -1,10 +1,5 @@
-package sample;
+package Model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class GameBoard {

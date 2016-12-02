@@ -1,4 +1,4 @@
-package sample;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ public class Player {
 
     private ArrayList<Carte> mesCartes = new ArrayList<Carte>();
 
-    Player(int player){
+    public Player(int player){
         this.player = player;
     }
 

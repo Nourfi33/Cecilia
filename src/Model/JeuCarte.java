@@ -1,4 +1,4 @@
-package sample;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +7,7 @@ public class JeuCarte extends ArrayList<Carte>{
 
     private int x, y;
 
-    JeuCarte(){
+    public JeuCarte(){
         for(int i=0; i<78; i++){
             this.add(i, new Carte(x, y, 0, String.valueOf(i+1)));
         }

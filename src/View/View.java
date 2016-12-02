@@ -1,4 +1,4 @@
-package sample;
+package View;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -7,27 +7,22 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Camera;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.DropShadow;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import Model.Carte;
+import Model.JeuCarte;
+import Model.Player;
+
+import java.awt.event.MouseEvent;
 
 public class View extends Application {
 
@@ -70,11 +65,11 @@ public class View extends Application {
     @Override public void start(Stage stage) {
 
 
-        Player me = new Player(1);
-        Player player2 = new Player(2);
-        Player player3 = new Player(3);
-        Player player4 = new Player(4);
-        Player chien = new Player(5);
+        Player me = new Model.Player(1);
+        Player player2 = new Model.Player(2);
+        Player player3 = new Model.Player(3);
+        Player player4 = new Model.Player(4);
+        Player dog = new Model.Player(5);
 
 
         Group p = new Group();
@@ -118,7 +113,8 @@ public class View extends Application {
         GACButton.setFont(font);
         GACButton.setVisible(true);
 
-        // Add buttons to the ButtonBar
+
+
 
 
         Camera camera = new PerspectiveCamera(true);
@@ -138,7 +134,6 @@ public class View extends Application {
         stage.setTitle("Let's play Tarot!");
 
         JeuCarte jeu = new JeuCarte();
-        GameBoard board = new GameBoard();
 
 
 
@@ -148,11 +143,6 @@ public class View extends Application {
         {
             p.getChildren().addAll(e.getNodes());
         }
-
-        p.getChildren().add(PButton);
-        p.getChildren().add(GButton);
-        p.getChildren().add(GACButton);
-        p.getChildren().add(GSCButton);
 
 
 
@@ -186,7 +176,7 @@ public class View extends Application {
                         break;
                     case 5:
                         jeu.get(pos).move(transX+transX*cptC, 0).play();
-                        chien.ajoutCarte(jeu.get(pos));
+                        dog.ajoutCarte(jeu.get(pos));
                         cptC += 1;
                         player = 2;
                         pos += 1;
@@ -226,10 +216,8 @@ public class View extends Application {
 
                 int j = 0;
 
-                for(Carte e: jeu){
-                    System.out.println(e.id);
+                for(Model.Carte e: jeu){
                     for(int i=0; i<me.getMesCartes().size(); i++){
-                        //System.out.println(me.getMesCartes().get(i).id());
 
                         if(e.id() == me.getMesCartes().get(i).id()){
                             jeu.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
@@ -237,9 +225,29 @@ public class View extends Application {
                     }
                     j++;
                 }
+                p.getChildren().add(PButton);
+                p.getChildren().add(GButton);
+                p.getChildren().add(GACButton);
+                p.getChildren().add(GSCButton);
+                stage.show();
+
             }
 
         };
+
+        PButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for(int i=0; i<6; i++){
+                    dog.getMesCartes().get(i).flip().play();
+                }
+                p.getChildren().removeAll(PButton, GButton);
+                p.getChildren().removeAll(GACButton, GSCButton);
+                stage.show();
+            }
+        });
+
+
 
 
 
@@ -249,13 +257,16 @@ public class View extends Application {
 
 
 
+
         //add the keyframe to the timeline
         timeline.getKeyFrames().add(keyFrame);
         timelineFlip.getKeyFrames().add(keyFrameFlip);
         timelineSort.getKeyFrames().add(keyFrameSort);
 
+
         SequentialTransition sequence = new SequentialTransition(timeline, timelineFlip, timelineSort);
         sequence.play();
+
 
     }
 

@@ -1,4 +1,4 @@
-package sample;
+package Model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,15 +20,15 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Carte {
-    double x, y, z;
-    int w, h;
-    String id = "";
+    public double x, y, z;
+    public int w, h;
+    public String id = "";
     ImageView devant = new ImageView();
     ImageView dos = new ImageView();
     static Image imageDos = new Image("file:./resources/backside.jpg");
     static long halfFlipDuration = 500;
 
-    Carte(double x, double y, double z, String fichier){
+    public Carte(double x, double y, double z, String fichier){
         Image imageDevant = new Image("file:./resources/"+fichier+".jpg");
         devant.setImage(imageDevant);
         devant.setTranslateX(x);
@@ -51,14 +51,14 @@ public class Carte {
         return Integer.valueOf(id);
     }
 
-    Collection<Node> getNodes(){
+    public Collection<Node> getNodes(){
         ArrayList<Node> al = new ArrayList<>();
         al.add(devant);
         al.add(dos);
         return al;
     }
 
-    Transition flip() {
+    public Transition flip() {
 
         final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), dos);
         rotateOutFront.setInterpolator(Interpolator.LINEAR);
@@ -86,7 +86,7 @@ public class Carte {
         return new SequentialTransition(rotateOutFront, rotateInBack);
     }
 
-    Transition move(int a, int b) {
+    public Transition move(int a, int b) {
 
         Path path1 = new Path();
         path1.getElements().add (new MoveTo (x+w, y+h));
