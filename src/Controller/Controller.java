@@ -2,6 +2,7 @@ package Controller;
 
 import Model.JeuCarte;
 import Model.Player;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 
 import javafx.animation.SequentialTransition;

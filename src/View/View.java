@@ -2,6 +2,7 @@ package View;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.input.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -13,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.input.MouseEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
@@ -74,12 +74,46 @@ public class View extends Application {
         Scene scene = new Scene(group);
         scene.getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
-
         createButton(controller.PButton, "PRISE DU CHIEN", -300, -300);
         createButton(controller.GButton, "GARDE", 100, -300);
-        createButton(controller.GButton, "GARDE SANS CHIEN", 500, -300);
-        createButton(controller.GButton, "GARDE CONTRE CHIEN", 900, -300);
+        createButton(controller.GACButton, "GARDE SANS CHIEN", 500, -300);
+        createButton(controller.GSCButton, "GARDE CONTRE CHIEN", 900, -300);
 
+        // Create the ButtonBar instance
+        Font font = new Font("Arial", 28);
+
+        // Create the buttons to go into the ButtonBar
+        Button PButton = new Button("PRISE DU CHIEN");
+        PButton.setMinSize(400,120);
+        PButton.setMaxSize(400,120);
+        PButton.setTranslateX(-300);
+        PButton.setTranslateY(-300);
+        PButton.setFont(font);
+        PButton.setVisible(true);
+
+        Button GButton = new Button("GARDE");
+        GButton.setMinSize(400,120);
+        GButton.setMaxSize(400,120);
+        GButton.setTranslateX(100);
+        GButton.setTranslateY(-300);
+        GButton.setFont(font);
+        GButton.setVisible(true);
+
+        Button GSCButton = new Button("GARDE SANS CHIEN");
+        GSCButton.setMinSize(400,120);
+        GSCButton.setMaxSize(400,120);
+        GSCButton.setTranslateX(500);
+        GSCButton.setTranslateY(-300);
+        GSCButton.setFont(font);
+        GSCButton.setVisible(true);
+
+        Button GACButton = new Button("GARDE CONTRE CHIEN");
+        GACButton.setMinSize(400,120);
+        GACButton.setMaxSize(400,120);
+        GACButton.setTranslateX(900);
+        GACButton.setTranslateY(-300);
+        GACButton.setFont(font);
+        GACButton.setVisible(true);
 
 
         Camera camera = new PerspectiveCamera(true);
@@ -150,13 +184,9 @@ public class View extends Application {
             });
         }*/
 
-
-
         KeyFrame keyFrame = new KeyFrame(duration, onFinished);
         KeyFrame keyFrameFlip = new KeyFrame(durationFlip, onFinishedFlip);
         KeyFrame keyFrameSort = new KeyFrame(durationSort, onFinishedSort);
-
-
 
 
         //add the keyframe to the timeline
@@ -167,7 +197,6 @@ public class View extends Application {
 
         SequentialTransition sequence = new SequentialTransition(timeline, timelineFlip, timelineSort);
         sequence.play();
-
 
     }
 
