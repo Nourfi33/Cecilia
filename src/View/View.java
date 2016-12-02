@@ -39,9 +39,25 @@ public class View extends Application {
     int x = 1800;
     int y = 600;
 
+    // Create the ButtonBar instance
+    Font font = new Font("Arial", 28);
+
+    public void createButton(Button btn, String title, int x, int y){
+        btn.setText(title);
+        btn.setMinSize(400,120);
+        btn.setMaxSize(400,120);
+        btn.setTranslateX(x);
+        btn.setTranslateY(y);
+        btn.setFont(font);
+        btn.setVisible(true);
+    }
+
     @Override public void start(Stage stage) {
 
+
         Controller controller = new Controller();
+
+        stage = controller.stage;
 
 
         Player me = controller.getMe();
@@ -51,46 +67,19 @@ public class View extends Application {
         Player dog = controller.getDog();
 
 
-        Group p = new Group();
-        Scene scene = new Scene(p);
+        Group groupCard = controller.getGroupCard();
+        Group groupButton = controller.getGroupButton();
+        Group group = new Group(groupButton, groupCard);
+
+        Scene scene = new Scene(group);
         scene.getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
-        // Create the ButtonBar instance
-        Font font = new Font("Arial", 28);
 
-        // Create the buttons to go into the ButtonBar
-        Button PButton = new Button("PRISE DU CHIEN");
-        PButton.setMinSize(400,120);
-        PButton.setMaxSize(400,120);
-        PButton.setTranslateX(-300);
-        PButton.setTranslateY(-300);
-        PButton.setFont(font);
-        PButton.setVisible(true);
+        createButton(controller.PButton, "PRISE DU CHIEN", -300, -300);
+        createButton(controller.GButton, "GARDE", 100, -300);
+        createButton(controller.GButton, "GARDE SANS CHIEN", 500, -300);
+        createButton(controller.GButton, "GARDE CONTRE CHIEN", 900, -300);
 
-
-        Button GButton = new Button("GARDE");
-        GButton.setMinSize(400,120);
-        GButton.setMaxSize(400,120);
-        GButton.setTranslateX(100);
-        GButton.setTranslateY(-300);
-        GButton.setFont(font);
-        GButton.setVisible(true);
-
-        Button GSCButton = new Button("GARDE SANS CHIEN");
-        GSCButton.setMinSize(400,120);
-        GSCButton.setMaxSize(400,120);
-        GSCButton.setTranslateX(500);
-        GSCButton.setTranslateY(-300);
-        GSCButton.setFont(font);
-        GSCButton.setVisible(true);
-
-        Button GACButton = new Button("GARDE CONTRE CHIEN");
-        GACButton.setMinSize(400,120);
-        GACButton.setMaxSize(400,120);
-        GACButton.setTranslateX(900);
-        GACButton.setTranslateY(-300);
-        GACButton.setFont(font);
-        GACButton.setVisible(true);
 
 
         Camera camera = new PerspectiveCamera(true);
@@ -111,11 +100,11 @@ public class View extends Application {
 
         JeuCarte cardGame = controller.getCardGame();
 
-        //p.getChildren().addAll(board.getNodes());
+        //g.getChildren().addAll(board.getNodes());
 
         for(Carte e : cardGame)
         {
-            p.getChildren().addAll(e.getNodes());
+            groupCard.getChildren().addAll(e.getNodes());
         }
 
         stage.show();
@@ -148,51 +137,18 @@ public class View extends Application {
         //one can add a specific action when the keyframe is reached
 
 
-        EventHandler onFinishedSort = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
+        EventHandler onFinishedSort = controller.sort;
 
-                me.sort(me.getMesCartes());
+        controller.PButton.setOnAction(controller.actionButtonPrise);
 
-                int j = 0;
-
-                for(Model.Carte e: cardGame){
-                    for(int i=0; i<me.getMesCartes().size(); i++){
-
-                        if(e.id() == me.getMesCartes().get(i).id()){
-                            cardGame.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
-                        }
-                    }
-                    j++;
-                }
-                p.getChildren().add(PButton);
-                p.getChildren().add(GButton);
-                p.getChildren().add(GACButton);
-                p.getChildren().add(GSCButton);
-                stage.show();
-            }
-
-        };
-
-        PButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                for(int i=0; i<6; i++){
-                    dog.getMesCartes().get(i).flip().play();
-                }
-                p.getChildren().removeAll(PButton, GButton);
-                p.getChildren().removeAll(GACButton, GSCButton);
-                stage.show();
-            }
-        });
-
-        for(int i=0; i<p.getChildren().size(); i++)
+        /*for(int i=0; i<g.getChildren().size(); i++)
         {
-            p.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
+            g.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent mouseE) {
 
                 }
             });
-        }
+        }*/
 
 
 

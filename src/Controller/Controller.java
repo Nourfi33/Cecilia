@@ -7,10 +7,19 @@ import javafx.event.EventHandler;
 import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 
 public class Controller {
+
+    Group groupCard = new Group();
+    Group groupButton = new Group();
+
+    public Stage stage = new Stage();
+
 
     JeuCarte cardGame = new JeuCarte();
 
@@ -19,6 +28,27 @@ public class Controller {
     Player player3 = new Player(3);
     Player player4 = new Player(4);
     Player dog = new Player(5);
+
+    public Button PButton = new Button();
+    public Button GButton = new Button();
+    public Button GSCButton = new Button();
+    public Button GACButton = new Button();
+
+    public Group getGroupButton() {
+        return groupButton;
+    }
+
+    public void setGroupButton(Group groupButton) {
+        this.groupButton = groupButton;
+    }
+
+    public Group getGroupCard() {
+        return groupCard;
+    }
+
+    public void setGroupCard(Group g) {
+        this.groupCard = groupCard;
+    }
 
     public JeuCarte getCardGame() {
         return cardGame;
@@ -113,6 +143,41 @@ public class Controller {
                 me.getMesCartes().get(cardGame.getCptF()).flip().play();
                 cardGame.setCptF(cardGame.getCptF()+1);
             }
+        }
+    };
+
+    public EventHandler sort = new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent t) {
+
+            me.sort(me.getMesCartes());
+
+            int j = 0;
+
+            for(Model.Carte e: cardGame){
+                for(int i=0; i<me.getMesCartes().size(); i++){
+
+                    if(e.id() == me.getMesCartes().get(i).id()){
+                        cardGame.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
+                    }
+                }
+                j++;
+            }
+            groupButton.getChildren().add(PButton);
+            groupButton.getChildren().add(GButton);
+            groupButton.getChildren().add(GACButton);
+            groupButton.getChildren().add(GSCButton);
+            stage.show();
+        }
+    };
+    public EventHandler actionButtonPrise = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            for(int i=0; i<6; i++){
+                dog.getMesCartes().get(i).flip().play();
+            }
+            groupButton.getChildren().removeAll(PButton, GButton);
+            groupButton.getChildren().removeAll(GACButton, GSCButton);
+            stage.show();
         }
     };
 }
