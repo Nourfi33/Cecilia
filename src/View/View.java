@@ -175,6 +175,7 @@ public class View extends Application {
 
         controller.PButton.setOnAction(controller.actionButtonPrise);
 
+
         /*for(int i=0; i<g.getChildren().size(); i++)
         {
             g.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {

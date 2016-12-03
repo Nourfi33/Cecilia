@@ -86,6 +86,34 @@ public class Carte {
         return new SequentialTransition(rotateOutFront, rotateInBack);
     }
 
+    public Transition flipInv() {
+
+        final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), devant);
+        rotateOutFront.setInterpolator(Interpolator.LINEAR);
+        rotateOutFront.setAxis(Rotate.Y_AXIS);
+        rotateOutFront.setFromAngle(0);
+        rotateOutFront.setToAngle(90);
+        dos.setVisible(false);
+
+        rotateOutFront.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                devant.setVisible(false);
+                dos.setVisible(true);
+            }
+        });
+
+        //
+        final RotateTransition rotateInBack = new RotateTransition(Duration.millis(halfFlipDuration), dos);
+        rotateInBack.setInterpolator(Interpolator.LINEAR);
+        rotateInBack.setAxis(Rotate.Y_AXIS);
+        rotateInBack.setFromAngle(-90);
+        rotateInBack.setToAngle(0);
+        //
+
+        return new SequentialTransition(rotateOutFront, rotateInBack);
+    }
+
     public Transition move(int a, int b) {
 
         Path path1 = new Path();

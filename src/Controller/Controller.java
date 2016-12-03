@@ -21,6 +21,7 @@ public class Controller {
 
     public Stage stage = new Stage();
 
+    int cptCarteRetour = 0;
 
     JeuCarte cardGame = new JeuCarte();
 
@@ -180,5 +181,15 @@ public class Controller {
             groupButton.getChildren().removeAll(GACButton, GSCButton);
             stage.show();
         }
+        public EventHandler actionGap = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseE) {
+                if(cptCarteRetour < 6){
+                    me.getMesCartes().get(cardGame.getCptCardsCho()).flip().play();
+                    cardGame.setCptCardsCho(cardGame.getCptCardsCho()+1);
+                }
+            }
+        };
     };
+
 }

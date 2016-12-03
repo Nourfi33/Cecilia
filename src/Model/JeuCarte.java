@@ -13,9 +13,18 @@ public class JeuCarte extends ArrayList<Carte>{
     private int pos = 0;
 
     private Integer cpt = 1;
+    private Integer cptCardsCho = 0;
     private Integer cptC = 1;
     private Integer cptF = 0;
     private Integer cptFC = 0;
+
+    public Integer getCptCardsCho(){
+        return cptCardsCho;
+    }
+
+    public void setCptCardsCho(Integer x){
+        this.cptCardsCho = x;
+    }
 
     public int getX() {
         return x;
