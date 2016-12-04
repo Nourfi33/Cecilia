@@ -53,7 +53,6 @@ public class JeuCarte extends ArrayList<Carte>{
         for(int i=0; i<78; i++){
             this.add(i, new Carte(x, y, 0, String.valueOf(i+1)));
         }
-
         Collections.shuffle(this);
     }
 

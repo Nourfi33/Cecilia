@@ -2,15 +2,16 @@ package Controller;
 
 import Model.JeuCarte;
 import Model.Player;
-import View.View;
-import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+
+import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import Model.Carte;
 
 
 public class Controller {
@@ -18,11 +19,10 @@ public class Controller {
     Group groupCard = new Group();
     Group groupButton = new Group();
 
-    Group groupMyCards = new Group();
-
     public Stage stage = new Stage();
 
-    int cptDog = 0;
+    int cptCarteRetour = 0;
+    boolean buttonClick = false;
 
     JeuCarte cardGame = new JeuCarte();
 
@@ -32,37 +32,79 @@ public class Controller {
     Player player4 = new Player(4);
     Player dog = new Player(5);
 
-    Button PriseButton = new Button();
-    Button PasseButton = new Button();
-    Button FiniButton = new Button();
-
-    public Group getGroupMyCards() {
-        return groupMyCards;
-    }
+    public Button PButton = new Button();
+    public Button GButton = new Button();
+    public Button GSCButton = new Button();
+    public Button GACButton = new Button();
 
     public Group getGroupButton() {
         return groupButton;
+    }
+
+    public void setGroupButton(Group groupButton) {
+        this.groupButton = groupButton;
+    }
+
+    public boolean getButtonClick(){
+        return buttonClick;
     }
 
     public Group getGroupCard() {
         return groupCard;
     }
 
+    public void setGroupCard(Group g) {
+        this.groupCard = groupCard;
+    }
+
     public JeuCarte getCardGame() {
         return cardGame;
     }
 
-    public Button getPriseButton() {
-        return PriseButton;
+    public void setCardGame(JeuCarte cardGame) {
+        this.cardGame = cardGame;
     }
 
-    public Button getPasseButton() {
-        return PasseButton;
+    public Player getMe() {
+        return me;
     }
 
-    public Button getFiniButton() {
-        return FiniButton;
+    public void setMe(Player me) {
+        this.me = me;
     }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public Player getPlayer3() {
+        return player3;
+    }
+
+    public void setPlayer3(Player player3) {
+        this.player3 = player3;
+    }
+
+    public Player getPlayer4() {
+        return player4;
+    }
+
+    public void setPlayer4(Player player4) {
+        this.player4 = player4;
+    }
+
+    public Player getDog() {
+        return dog;
+    }
+
+    public void setDog(Player dog) {
+        this.dog = dog;
+    }
+
 
 
     /**
@@ -118,83 +160,43 @@ public class Controller {
 
             int j = 0;
 
-            for(Carte e: cardGame){
+            for(Model.Carte e: cardGame){
                 for(int i=0; i<me.getMesCartes().size(); i++){
 
                     if(e.id() == me.getMesCartes().get(i).id()){
-                        cardGame.get(j).move((int) me.getMesCartes().get(i).x-me.getMesCartes().get(i).w, (int) me.getMesCartes().get(i).y-me.getMesCartes().get(i).h).play();
+                        cardGame.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
                     }
                 }
                 j++;
             }
-            groupButton.getChildren().add(PriseButton);
-            groupButton.getChildren().add(PasseButton);
-            groupButton.getChildren().add(FiniButton);
+            groupButton.getChildren().add(PButton);
+            groupButton.getChildren().add(GButton);
+            groupButton.getChildren().add(GACButton);
+            groupButton.getChildren().add(GSCButton);
             stage.show();
         }
     };
-
     public EventHandler actionButtonPrise = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-
-            groupButton.getChildren().clear();
-            stage.show();
-
-            cardGame.TakeDog(dog.getMesCartes(), me, cardGame.getTransX(), cardGame.getTransY());
-            stage.show();
-
-            int j = 0;
-
-            for (Carte e : cardGame) {
-                for (int i = 0; i < me.getMesCartes().size(); i++) {
-
-                    if (e.id() == me.getMesCartes().get(i).id()) {
-                        cardGame.get(j).move((int) me.getMesCartes().get(i).x-100, (int) me.getMesCartes().get(i).y-200).play();
-                    }
-                }
-                j++;
+            for(int i=0; i<6; i++){
+                dog.getMesCartes().get(i).flip().play();
             }
-
-            me.getMesCartes().clear();
-
-
-            for(int i=1; i<groupCard.getChildren().size(); i++)
-            {
-                if(i!=29 && i!=49 && i!=78)
-                    groupCard.getChildren().get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, chose);
-            }
-
+            groupButton.getChildren().removeAll(PButton, GButton);
+            groupButton.getChildren().removeAll(GACButton, GSCButton);
+            buttonClick = true;
+            stage.show();
         }
     };
 
-    public EventHandler chose = new EventHandler<MouseEvent>() {
+    public EventHandler actionGap = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseE) {
-
-            if(cptDog < 6) {
-                groupCard.getChildren().remove(mouseE.getSource());
-                cptDog++;
+            if(cptCarteRetour < 6){
+                me.getMesCartes().get(cardGame.getCptCardsCho()).flip().play();
+                cardGame.setCptCardsCho(cardGame.getCptCardsCho()+1);
             }
-
-            stage.show();
-
         }
     };
 
-
-    public EventHandler actionButtonPasse =  new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            stage.close();
-            Platform.runLater( () -> new View().start( new Stage() ));
-        }
-    };
-
-    public EventHandler actionButtonFini =  new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            Platform.exit();
-        }
-    };
 }
