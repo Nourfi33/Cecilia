@@ -5,7 +5,6 @@ import Model.Player;
 import View.View;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.Button;

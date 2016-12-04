@@ -97,7 +97,7 @@ public class View extends Application {
         timeline.setCycleCount(30);
 
         //create a keyFrame, the keyValue is reached at time 2s
-        Duration duration = Duration.millis(100);
+        Duration duration = Duration.millis(400);
         //one can add a specific action when the keyframe is reached
 
 
