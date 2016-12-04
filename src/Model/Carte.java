@@ -23,7 +23,7 @@ public class Carte {
     public double x, y, z;
     public int w, h;
     public String id = "";
-    ImageView devant = new ImageView();
+    public ImageView devant = new ImageView();
     ImageView dos = new ImageView();
     static Image imageDos = new Image("file:./resources/backside.jpg");
     static long halfFlipDuration = 500;

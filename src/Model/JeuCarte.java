@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class JeuCarte extends ArrayList<Carte>{
 
-    private int x, y;
+    private int x=0, y=-300;
 
     private int transX = 110;
     private int transY = 400;
@@ -13,49 +13,24 @@ public class JeuCarte extends ArrayList<Carte>{
     private int pos = 0;
 
     private Integer cpt = 1;
-    private Integer cptCardsCho = 0;
+    private Integer cptPrise = 0;
     private Integer cptC = 1;
     private Integer cptF = 0;
-    private Integer cptFC = 0;
 
-    public Integer getCptCardsCho(){
-        return cptCardsCho;
+    public Integer getCptPrise(){
+        return cptPrise;
     }
 
-    public void setCptCardsCho(Integer x){
-        this.cptCardsCho = x;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setCptPrise(Integer x){
+        this.cptPrise = x;
     }
 
     public int getTransX() {
         return transX;
     }
 
-    public void setTransX(int transX) {
-        this.transX = transX;
-    }
-
     public int getTransY() {
         return transY;
-    }
-
-    public void setTransY(int transY) {
-        this.transY = transY;
     }
 
     public int getPlayer() {
@@ -66,30 +41,6 @@ public class JeuCarte extends ArrayList<Carte>{
         this.player = player;
     }
 
-    public int getPos() {
-        return pos;
-    }
-
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
-
-    public Integer getCpt() {
-        return cpt;
-    }
-
-    public void setCpt(Integer cpt) {
-        this.cpt = cpt;
-    }
-
-    public Integer getCptC() {
-        return cptC;
-    }
-
-    public void setCptC(Integer cptC) {
-        this.cptC = cptC;
-    }
-
     public Integer getCptF() {
         return cptF;
     }
@@ -97,15 +48,6 @@ public class JeuCarte extends ArrayList<Carte>{
     public void setCptF(Integer cptF) {
         this.cptF = cptF;
     }
-
-    public Integer getCptFC() {
-        return cptFC;
-    }
-
-    public void setCptFC(Integer cptFC) {
-        this.cptFC = cptFC;
-    }
-
 
     public JeuCarte(){
         for(int i=0; i<78; i++){
@@ -141,6 +83,21 @@ public class JeuCarte extends ArrayList<Carte>{
             pos += 1;
         }
     }
+
+    public void TakeDog(ArrayList<Carte> cardGame, Player player, int x, int y){
+            for (int j = 0; j < 6; j++) {
+                cardGame.get(j).flip().play();
+                cardGame.get(j).move(x * (j+1), y).play();
+                player.ajoutCarte(cardGame.get(j));
+            }
+            cardGame.clear();
+
+            player.sort(player.getMesCartes());
+
+
+
+    }
+
 
 
 }

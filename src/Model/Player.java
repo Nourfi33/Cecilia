@@ -6,7 +6,6 @@ import java.util.Arrays;
 public class Player {
 
     public int player;
-    int x, y;
 
     private ArrayList<Carte> mesCartes = new ArrayList<Carte>();
 
@@ -38,17 +37,13 @@ public class Player {
 
         mesCartes.clear();
 
-        for(int j=0; j<18; j++){
+        for(int j=0; j<i; j++){
             mesCartes.add(j, new Carte(tabX[j], tabY[j], 0, String.valueOf(tab[j]))); // problÃ¨me Ã  rÃ©gler pour finir le tri
         }
     }
 
     public ArrayList<Carte> getMesCartes() {
         return mesCartes;
-    }
-
-    public void setMesCartes(ArrayList<Carte> mesCartes) {
-        this.mesCartes = mesCartes;
     }
 
 
