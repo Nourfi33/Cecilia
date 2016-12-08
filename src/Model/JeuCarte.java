@@ -5,7 +5,8 @@ import java.util.Collections;
 
 public class JeuCarte extends ArrayList<Carte>{
 
-    private int x=0, y=-300;
+
+    private int x=400-100/2, y=-300;
 
     private int transX = 110;
     private int transY = 400;
@@ -13,17 +14,8 @@ public class JeuCarte extends ArrayList<Carte>{
     private int pos = 0;
 
     private Integer cpt = 1;
-    private Integer cptPrise = 0;
     private Integer cptC = 1;
     private Integer cptF = 0;
-
-    public Integer getCptPrise(){
-        return cptPrise;
-    }
-
-    public void setCptPrise(Integer x){
-        this.cptPrise = x;
-    }
 
     public int getTransX() {
         return transX;
@@ -93,9 +85,6 @@ public class JeuCarte extends ArrayList<Carte>{
             cardGame.clear();
 
             player.sort(player.getMesCartes());
-
-
-
     }
 
 

@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -15,12 +16,16 @@ import Model.Carte;
 
 public class Controller {
 
+    View view = new View();
+
     Group groupCard = new Group();
     Group groupButton = new Group();
 
     Group groupMyCards = new Group();
 
     public Stage stage = new Stage();
+
+    public Scene scene;
 
     int cptDog = 0;
 
@@ -148,7 +153,6 @@ public class Controller {
 
             for (Carte e : cardGame) {
                 for (int i = 0; i < me.getMesCartes().size(); i++) {
-
                     if (e.id() == me.getMesCartes().get(i).id()) {
                         cardGame.get(j).move((int) me.getMesCartes().get(i).x-100, (int) me.getMesCartes().get(i).y-200).play();
                     }
@@ -156,26 +160,45 @@ public class Controller {
                 j++;
             }
 
-            me.getMesCartes().clear();
-
-
-            for(int i=1; i<groupCard.getChildren().size(); i++)
-            {
-                if(i!=29 && i!=49 && i!=78)
-                    groupCard.getChildren().get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, chose);
-            }
+            scene.addEventHandler(MouseEvent.MOUSE_PRESSED, ridOf);
 
         }
     };
 
-    public EventHandler chose = new EventHandler<MouseEvent>() {
+    public EventHandler ridOf = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseE) {
 
-            if(cptDog < 6) {
+            /*int j = 0;
+
+            for (Carte e : cardGame) {
+                for (int i = 0; i < me.getMesCartes().size(); i++) {
+                    if((mouseE.getX() >= me.getMesCartes().get(i).x) && (mouseE.getX() <= me.getMesCartes().get(i).x+me.getMesCartes().get(i).w) && (mouseE.getY() >= me.getMesCartes().get(i).y) && (mouseE.getY() <= me.getMesCartes().get(i).y+me.getMesCartes().get(i).h)){
+                        System.out.println("oui");
+                        cardGame.get(j).move(100, 200).play();
+                    }
+                }
+                j++;
+            }*/
+
+            System.out.println(mouseE.getX());
+            System.out.println(mouseE.getY());
+
+
+
+            for(int i=0; i<me.getMesCartes().size(); i++)
+            {
+                if((mouseE.getX() >= me.getMesCartes().get(i).x) && (mouseE.getX() <= me.getMesCartes().get(i).x+me.getMesCartes().get(i).w) && (mouseE.getY() <= me.getMesCartes().get(i).y) && (mouseE.getY() >= me.getMesCartes().get(i).y+me.getMesCartes().get(i).h)){
+                    System.out.println("oui");
+                    me.getMesCartes().get(i).move(100,100).play();
+                }
+                //if(i!=29 && i!=49 && i!=78)
+            }
+
+            /*if(cptDog < 6) {
                 groupCard.getChildren().remove(mouseE.getSource());
                 cptDog++;
-            }
+            }*/
 
             stage.show();
 
@@ -187,7 +210,8 @@ public class Controller {
         @Override
         public void handle(ActionEvent event) {
             stage.close();
-            Platform.runLater( () -> new View().start( new Stage() ));
+            Stage newStage = new Stage();
+            Platform.runLater( () -> new View().start( newStage ));
         }
     };
 

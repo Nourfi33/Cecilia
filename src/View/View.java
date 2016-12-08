@@ -2,6 +2,7 @@ package View;
 
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -23,6 +24,8 @@ import Controller.Controller;
 
 public class View extends Application {
 
+    public Scene scene;
+
 
     //main timeline
     private Timeline timeline, timelineFlip, timelineSort;
@@ -39,6 +42,7 @@ public class View extends Application {
         btn.setMaxSize(400,120);
         btn.setTranslateX(x);
         btn.setTranslateY(y);
+        btn.setTranslateZ(-2);
         btn.setFont(font);
         btn.setVisible(true);
     }
@@ -56,7 +60,9 @@ public class View extends Application {
         Group groupMyCards = controller.getGroupMyCards();
         Group group = new Group(groupButton, groupCard, groupMyCards);
 
-        Scene scene = new Scene(group);
+        controller.scene = new Scene(group);
+        scene = controller.scene;
+        scene.setFill(Color.GREEN);
         scene.getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
 
@@ -67,11 +73,11 @@ public class View extends Application {
 
 
         Camera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-1700);
+        camera.setTranslateZ(-2000);
         camera.setTranslateX(400);
-        camera.setTranslateY(900);
-        camera.setNearClip(0.2);
-        camera.setFarClip(2000.0);
+        camera.setTranslateY(1000);
+        camera.setNearClip(1.0);
+        camera.setFarClip(5000.0);
         camera.setRotationAxis(Rotate.X_AXIS);
         camera.setRotate(20);
         scene.setCamera(camera);
@@ -81,6 +87,7 @@ public class View extends Application {
         stage.setWidth(x);
         stage.setHeight(y);
         stage.setTitle("Let's play Tarot!");
+        stage.setFullScreen(true);
 
         JeuCarte cardGame = controller.getCardGame();
 
@@ -146,8 +153,6 @@ public class View extends Application {
 
         SequentialTransition sequence = new SequentialTransition(timeline, timelineFlip, timelineSort);
         sequence.play();
-
-
     }
 
     public static void main(String[] args) {

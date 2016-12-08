@@ -23,7 +23,7 @@ public class Carte {
     public double x, y, z;
     public int w, h;
     public String id = "";
-    public ImageView devant = new ImageView();
+    ImageView devant = new ImageView();
     ImageView dos = new ImageView();
     static Image imageDos = new Image("file:./resources/backside.jpg");
     static long halfFlipDuration = 500;
@@ -42,8 +42,8 @@ public class Carte {
         this.x = devant.getTranslateX();
         this.y = devant.getTranslateY();
         this.z = devant.getTranslateZ();
-        this.w = 50/2;
-        this.h = 89/2;
+        this.w = 100;
+        this.h = 180;
         this.id = fichier;
     }
 
@@ -56,6 +56,10 @@ public class Carte {
         al.add(devant);
         al.add(dos);
         return al;
+    }
+
+    public Node getFront(){
+        return devant;
     }
 
     public Transition flip() {
