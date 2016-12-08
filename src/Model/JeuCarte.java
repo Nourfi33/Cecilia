@@ -3,6 +3,18 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/*
+ * Nom de classe : JeuCarte
+ *
+ * Description   : La classe permet de créer le paquet de cartes et de le distribuer
+ *
+ * Version       : 2.0
+ *
+ * Date          : 15/11/2016
+ *
+ * Copyright     : Julien Germanaud et Nicolas Gras
+ */
+
 public class JeuCarte extends ArrayList<Carte>{
 
 
@@ -41,6 +53,10 @@ public class JeuCarte extends ArrayList<Carte>{
         this.cptF = cptF;
     }
 
+    /**
+     *  Le constructeur de la classe, il permet de créer
+     *  le jeu de carte et de les mélanger
+     */
     public JeuCarte(){
         for(int i=0; i<78; i++){
             this.add(i, new Carte(x, y, 0, String.valueOf(i+1)));
@@ -48,7 +64,9 @@ public class JeuCarte extends ArrayList<Carte>{
         Collections.shuffle(this);
     }
 
-
+    /**
+     *  La méhode permet de distribuer des cartes
+     */
     public void distribute(Player player, int x, int y){
         if(player.player != 5) {
             for (int j = pos; j < pos + 3; j++) {
@@ -75,6 +93,9 @@ public class JeuCarte extends ArrayList<Carte>{
         }
     }
 
+    /**
+     *  La méhode permet de prendre le chien et de l'ajouter au jeu du joueur
+     */
     public void TakeDog(ArrayList<Carte> cardGame, Player player, int x, int y){
             for (int j = 0; j < 6; j++) {
                 cardGame.get(j).flip().play();

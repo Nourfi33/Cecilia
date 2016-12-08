@@ -3,6 +3,18 @@ package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+ * Nom de classe : Player
+ *
+ * Description   : La classe contient les cartes de chaque joueur et de les mélanger
+ *
+ * Version       : 2.6
+ *
+ * Date          : 15/11/2016
+ *
+ * Copyright     : Julien Germanaud et Nicolas Gras
+ */
+
 public class Player {
 
     public int player;
@@ -17,6 +29,9 @@ public class Player {
         getMesCartes().add(carte);
     }
 
+    /**
+     *  La méhode permet de trier en passant par un tableau
+     */
     public void sort(ArrayList<Carte> mesCartes){
         int i=0;
         int tab[] = new int[mesCartes.size()];

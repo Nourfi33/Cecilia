@@ -19,6 +19,18 @@ import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+
+/*
+ * Nom de classe : Carte
+ *
+ * Description   : La classe Carte permet la création de carte celon certain attributs
+ *
+ * Version       : 2.6
+ *
+ * Date          : 15/11/2016
+ *
+ * Copyright     : Julien Germanaud et Nicolas Gras
+ */
 public class Carte {
     public double x, y, z;
     public int w, h;
@@ -47,6 +59,9 @@ public class Carte {
         this.id = fichier;
     }
 
+    /**
+     *  La méthode retourne l'id de la carte
+     */
     public int id(){
         return Integer.valueOf(id);
     }
@@ -62,6 +77,10 @@ public class Carte {
         return devant;
     }
 
+    /**
+     *  La méthode permet de retourner les cartes du joueur
+     *  FACE CACHE ==> FACE RETOURNE
+     */
     public Transition flip() {
 
         final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), dos);
@@ -90,6 +109,10 @@ public class Carte {
         return new SequentialTransition(rotateOutFront, rotateInBack);
     }
 
+    /**
+     *  La méthode permet de retourner les cartes du joueur
+     *  FACE RETOURNE ==> FACE CACHE
+     */
     public Transition flipInv() {
 
         final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), devant);
@@ -118,6 +141,9 @@ public class Carte {
         return new SequentialTransition(rotateOutFront, rotateInBack);
     }
 
+    /**
+     *  La méthode permet le déplacement des cartes
+     */
     public Transition move(int a, int b) {
 
         Path path1 = new Path();

@@ -14,6 +14,18 @@ import javafx.stage.Stage;
 import Model.Carte;
 
 
+/*
+ * Nom de classe : Controller
+ *
+ * Description   : La classe gère tous les événements de la classe View
+ *
+ * Version       : 4.0
+ *
+ * Date          : 15/11/2016
+ *
+ * Copyright     : Julien Germanaud et Nicolas Gras
+ */
+
 public class Controller {
 
     View view = new View();
@@ -69,15 +81,13 @@ public class Controller {
         return FiniButton;
     }
 
-
-    /**
-     * Create a controller. *
-     * @param model
-     * The model. */
     public Controller() {
 
     }
 
+    /**
+     *  La méhode permet de distribuer les cartes à chaque joueur
+     */
     public EventHandler distribute = new EventHandler<ActionEvent>() {
 
         @Override
@@ -107,6 +117,10 @@ public class Controller {
         }
     };
 
+    /**
+     *  La méthode permet de retourner les cartes du joueur
+     *  FACE CACHE ==> FACE RETOURNE
+     */
     public EventHandler flip =  new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
             if(cardGame.getCptF()<18){
@@ -116,6 +130,9 @@ public class Controller {
         }
     };
 
+    /**
+     *  La méthode trie les cartes
+     */
     public EventHandler sort = new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
 
@@ -139,6 +156,10 @@ public class Controller {
         }
     };
 
+    /**
+     *  Méthode qui se lance quand l'utilisateur appuie
+     *  sur le bouton Prise. Elle permet de réalisée l'écart
+     */
     public EventHandler actionButtonPrise = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -165,6 +186,10 @@ public class Controller {
         }
     };
 
+    /**
+     *  Méthode qui permet de sélectionner les 6 cartes pour reconstituer le chien,
+     *  une fois pris
+     */
     public EventHandler ridOf = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseE) {
@@ -206,6 +231,10 @@ public class Controller {
     };
 
 
+    /**
+     *  Méthode qui se lance quand l'utilisateur appuie
+     *  sur le bouton Passe. Elle permet de relancer la distribution
+     */
     public EventHandler actionButtonPasse =  new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -215,6 +244,10 @@ public class Controller {
         }
     };
 
+    /**
+     *  Méthode qui se lance quand l'utilisateur appuie
+     *  sur le bouton Distribution Finie. Elle permet de quitter la distribution
+     */
     public EventHandler actionButtonFini =  new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {

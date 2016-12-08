@@ -1,10 +1,14 @@
 package sample;
 
+import Model.JeuCarte;
+import Model.Carte;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.junit.Test;
 
 public class test {
     @Test
-    public void testModel(){
+    public void testId(){
 
 
     }

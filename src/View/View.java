@@ -22,6 +22,18 @@ import Model.JeuCarte;
 import Controller.Controller;
 
 
+/*
+ * Nom de classe : View
+ *
+ * Description   : La classe gère tous les événements visuel de la distribution
+ *
+ * Version       : 4.2
+ *
+ * Date          : 15/11/2016
+ *
+ * Copyright     : Julien Germanaud et Nicolas Gras
+ */
+
 public class View extends Application {
 
     public Scene scene;
@@ -36,6 +48,9 @@ public class View extends Application {
     // Create the ButtonBar instance
     Font font = new Font("Arial", 28);
 
+    /**
+     *  La méhode permet de créer un bouton
+     */
     public void createButton(Button btn, String title, int x, int y){
         btn.setText(title);
         btn.setMinSize(400,120);
@@ -47,6 +62,10 @@ public class View extends Application {
         btn.setVisible(true);
     }
 
+    /**
+     *  La méthode start permet de lancer le jeu, c'est la méthode qui contient
+     *  toutes les actions du jeu
+     */
     @Override public void start(Stage stage) {
 
 
