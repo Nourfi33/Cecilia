@@ -2,7 +2,6 @@ package Model;
 
 
 import View.Carte;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -109,7 +108,5 @@ public class JeuCarte extends ArrayList<Carte> {
 
             player.sort(player.getMesCartes());
     }
-
-
 
 }

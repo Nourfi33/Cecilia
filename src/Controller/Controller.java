@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import View.Carte;
@@ -96,15 +95,9 @@ public class Controller {
         return cardGame;
     }
 
-
     /**
-     * Create a controller. *
-     * @param model
-     * The model. */
-    public Controller() {
-
-    }
-
+     * Evenement de distribution. Distribution
+     */
     public EventHandler distribute = new EventHandler<ActionEvent>() {
 
         @Override
@@ -134,6 +127,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement pour retourner les cartes
+     */
     public EventHandler flip =  new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
             if(cardGame.getCptF()<18){
@@ -143,6 +139,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement de trie et ajout des boutons à la fin
+     */
     public EventHandler sort = new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
 
@@ -168,6 +167,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement du bouton Prise
+     */
     public EventHandler actionButtonPrise = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -190,6 +192,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement pour écarter les cartes
+     */
     public EventHandler ridOf = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseE) {
@@ -222,15 +227,20 @@ public class Controller {
         }
     };
 
-
+    /**
+     * Evenement pour recommencer le trie
+     */
     public EventHandler actionButtonPass =  new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event){
             stage.close();
-            Platform.runLater( () -> new View().start( new Stage() ));
+            Platform.runLater(() -> new View().start(new Stage()));
         }
     };
 
+    /**
+     * Evenement de Garde sans chien
+     */
     public EventHandler actionButtonGardeSans =  new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event){
@@ -250,6 +260,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement de Garde contre chien
+     */
     public EventHandler actionButtonGardeContre =  new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event){
@@ -269,6 +282,9 @@ public class Controller {
         }
     };
 
+    /**
+     * Evenement pour terminer la distribution
+     */
     public EventHandler actionButtonFini = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {

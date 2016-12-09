@@ -43,10 +43,6 @@ public class View extends Application {
     int x = 1800;
     int y = 900;
 
-    public View(){
-
-    }
-
     /**
      *  La méhode permet de créer un bouton
      */
@@ -73,11 +69,13 @@ public class View extends Application {
 
         Group group = new Group(controller.getGroupButton(), controller.getGroupCard(), controller.getGroupMyCards());
 
+        // set les propriétés de la scène
         controller.setScene(new Scene(group));
         controller.getScene().setFill(Color.GREEN);
         controller.getScene().getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
 
+        // création des boutons
         createButton(controller.getPriseButton(), "PRISE", -300, -300);
         createButton(controller.getGardeButton(), "GARDE", 0, -300);
         createButton(controller.getPassButton(), "PASSE", 300, -300);
@@ -86,6 +84,7 @@ public class View extends Application {
         createButton(controller.getFiniButton(), "DISTRIBUTION FINI", 1200, -300);
 
 
+        // ajout des événements aux boutons
         controller.getPriseButton().setOnAction(controller.actionButtonPrise);
         controller.getGardeButton().setOnAction(controller.actionButtonPrise);
         controller.getPassButton().setOnAction(controller.actionButtonPass);
@@ -93,6 +92,7 @@ public class View extends Application {
         controller.getGardeContreButton().setOnAction(controller.actionButtonGardeContre);
         controller.getFiniButton().setOnAction(controller.actionButtonFini);
 
+        // set la caméra
         Camera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-2000);
         camera.setTranslateX(550);
@@ -103,7 +103,7 @@ public class View extends Application {
         camera.setRotate(20);
         controller.getScene().setCamera(camera);
 
-
+        // set la scène
         stage.setScene(controller.getScene());
         stage.setWidth(x);
         stage.setHeight(y);
@@ -113,6 +113,7 @@ public class View extends Application {
         JeuCarte cardGame = controller.getCardGame();
 
 
+        // ajout des Carte au groupe
         for(Carte e : cardGame)
         {
             controller.getGroupCard().getChildren().addAll(e.getNodes());
@@ -164,7 +165,7 @@ public class View extends Application {
         timelineFlip.getKeyFrames().add(keyFrameFlip);
         timelineSort.getKeyFrames().add(keyFrameSort);
 
-
+        // séquence des timelines
         SequentialTransition sequence = new SequentialTransition(timeline, timelineFlip, timelineSort);
         sequence.play();
 
