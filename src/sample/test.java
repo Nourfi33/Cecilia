@@ -1,4 +1,4 @@
-package sample;
+/*package sample;
 
 import Model.JeuCarte;
 import Model.Carte;
@@ -19,3 +19,4 @@ public class test {
 
     }
 }
+*/

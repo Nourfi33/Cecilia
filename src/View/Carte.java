@@ -1,4 +1,4 @@
-package Model;
+package View;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,18 +19,6 @@ import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-
-/*
- * Nom de classe : Carte
- *
- * Description   : La classe Carte permet la création de carte celon certain attributs
- *
- * Version       : 2.6
- *
- * Date          : 15/11/2016
- *
- * Copyright     : Julien Germanaud et Nicolas Gras
- */
 public class Carte {
     public double x, y, z;
     public int w, h;
@@ -46,6 +34,8 @@ public class Carte {
         devant.setTranslateX(x);
         devant.setTranslateY(y);
         devant.setTranslateZ(z);
+        devant.setVisible(false);
+
         dos.setImage(imageDos);
         dos.setTranslateX(x);
         dos.setTranslateY(y);
@@ -59,9 +49,6 @@ public class Carte {
         this.id = fichier;
     }
 
-    /**
-     *  La méthode retourne l'id de la carte
-     */
     public int id(){
         return Integer.valueOf(id);
     }
@@ -73,14 +60,6 @@ public class Carte {
         return al;
     }
 
-    public Node getFront(){
-        return devant;
-    }
-
-    /**
-     *  La méthode permet de retourner les cartes du joueur
-     *  FACE CACHE ==> FACE RETOURNE
-     */
     public Transition flip() {
 
         final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), dos);
@@ -109,45 +88,10 @@ public class Carte {
         return new SequentialTransition(rotateOutFront, rotateInBack);
     }
 
-    /**
-     *  La méthode permet de retourner les cartes du joueur
-     *  FACE RETOURNE ==> FACE CACHE
-     */
-    public Transition flipInv() {
-
-        final RotateTransition rotateOutFront = new RotateTransition(Duration.millis(halfFlipDuration), devant);
-        rotateOutFront.setInterpolator(Interpolator.LINEAR);
-        rotateOutFront.setAxis(Rotate.Y_AXIS);
-        rotateOutFront.setFromAngle(0);
-        rotateOutFront.setToAngle(90);
-        dos.setVisible(false);
-
-        rotateOutFront.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                devant.setVisible(false);
-                dos.setVisible(true);
-            }
-        });
-
-        //
-        final RotateTransition rotateInBack = new RotateTransition(Duration.millis(halfFlipDuration), dos);
-        rotateInBack.setInterpolator(Interpolator.LINEAR);
-        rotateInBack.setAxis(Rotate.Y_AXIS);
-        rotateInBack.setFromAngle(-90);
-        rotateInBack.setToAngle(0);
-        //
-
-        return new SequentialTransition(rotateOutFront, rotateInBack);
-    }
-
-    /**
-     *  La méthode permet le déplacement des cartes
-     */
     public Transition move(int a, int b) {
 
         Path path1 = new Path();
-        path1.getElements().add (new MoveTo (x+w, y+h));
+        path1.getElements().add (new MoveTo (x+w/2, y+h/2));
         path1.getElements().add (new LineTo (a, b));
 
         PathTransition pathTransition1 = new PathTransition();
@@ -156,7 +100,7 @@ public class Carte {
         pathTransition1.setPath(path1);
 
         Path path2 = new Path();
-        path2.getElements().add (new MoveTo (x+w, y+h));
+        path2.getElements().add (new MoveTo (x+1, y));
         path2.getElements().add (new LineTo (a, b));
 
         PathTransition pathTransition2 = new PathTransition();

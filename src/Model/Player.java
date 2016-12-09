@@ -1,5 +1,7 @@
 package Model;
 
+import View.Carte;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,14 +48,12 @@ public class Player {
             i++;
         }
 
-
         Arrays.sort(tab);
-
 
         mesCartes.clear();
 
         for(int j=0; j<i; j++){
-            mesCartes.add(j, new Carte(tabX[j], tabY[j], 0, String.valueOf(tab[j]))); // problÃ¨me Ã  rÃ©gler pour finir le tri
+            mesCartes.add(j, new Carte(tabX[j], tabY[j], 0, String.valueOf(tab[j]))); // probleme  regler pour finir le tri
         }
     }
 

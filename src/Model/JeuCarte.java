@@ -1,5 +1,8 @@
 package Model;
 
+
+import View.Carte;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -15,10 +18,10 @@ import java.util.Collections;
  * Copyright     : Julien Germanaud et Nicolas Gras
  */
 
-public class JeuCarte extends ArrayList<Carte>{
+public class JeuCarte extends ArrayList<Carte> {
 
 
-    private int x=400-100/2, y=-300;
+    private int x=500, y=-300;
 
     private int transX = 110;
     private int transY = 400;

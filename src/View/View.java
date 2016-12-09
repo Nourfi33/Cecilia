@@ -1,5 +1,6 @@
 package View;
 
+import Model.Player;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
@@ -17,7 +18,6 @@ import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
 
 
-import Model.Carte;
 import Model.JeuCarte;
 import Controller.Controller;
 
@@ -36,8 +36,6 @@ import Controller.Controller;
 
 public class View extends Application {
 
-    public Scene scene;
-
 
     //main timeline
     private Timeline timeline, timelineFlip, timelineSort;
@@ -45,20 +43,21 @@ public class View extends Application {
     int x = 1800;
     int y = 900;
 
-    // Create the ButtonBar instance
-    Font font = new Font("Arial", 28);
+    public View(){
+
+    }
 
     /**
      *  La méhode permet de créer un bouton
      */
     public void createButton(Button btn, String title, int x, int y){
         btn.setText(title);
-        btn.setMinSize(400,120);
-        btn.setMaxSize(400,120);
+        btn.setMinSize(300,100);
+        btn.setMaxSize(300,100);
         btn.setTranslateX(x);
         btn.setTranslateY(y);
         btn.setTranslateZ(-2);
-        btn.setFont(font);
+        btn.setFont(new Font("Arial", 12));
         btn.setVisible(true);
     }
 
@@ -68,41 +67,44 @@ public class View extends Application {
      */
     @Override public void start(Stage stage) {
 
-
         Controller controller = new Controller();
 
-        stage = controller.stage;
+        controller.setStage(stage);
+
+        Group group = new Group(controller.getGroupButton(), controller.getGroupCard(), controller.getGroupMyCards());
+
+        controller.setScene(new Scene(group));
+        controller.getScene().setFill(Color.GREEN);
+        controller.getScene().getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
 
 
-        Group groupCard = controller.getGroupCard();
-        Group groupButton = controller.getGroupButton();
-        Group groupMyCards = controller.getGroupMyCards();
-        Group group = new Group(groupButton, groupCard, groupMyCards);
-
-        controller.scene = new Scene(group);
-        scene = controller.scene;
-        scene.setFill(Color.GREEN);
-        scene.getStylesheets().add(View.class.getResource("DarkTheme.css").toExternalForm());
+        createButton(controller.getPriseButton(), "PRISE", -300, -300);
+        createButton(controller.getGardeButton(), "GARDE", 0, -300);
+        createButton(controller.getPassButton(), "PASSE", 300, -300);
+        createButton(controller.getGardeSansButton(), "GARDE SANS CHIEN", 600, -300);
+        createButton(controller.getGardeContreButton(), "GARDE CONTRE CHIEN", 900, -300);
+        createButton(controller.getFiniButton(), "DISTRIBUTION FINI", 1200, -300);
 
 
-        createButton(controller.getPriseButton(), "PRISE DU CHIEN", -300, -300);
-        createButton(controller.getPasseButton(), "PASSE", 100, -300);
-        createButton(controller.getFiniButton(), "DISTRIBUTION FINI", 500, -300);
-
-
+        controller.getPriseButton().setOnAction(controller.actionButtonPrise);
+        controller.getGardeButton().setOnAction(controller.actionButtonPrise);
+        controller.getPassButton().setOnAction(controller.actionButtonPass);
+        controller.getGardeSansButton().setOnAction(controller.actionButtonGardeSans);
+        controller.getGardeContreButton().setOnAction(controller.actionButtonGardeContre);
+        controller.getFiniButton().setOnAction(controller.actionButtonFini);
 
         Camera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-2000);
-        camera.setTranslateX(400);
+        camera.setTranslateX(550);
         camera.setTranslateY(1000);
         camera.setNearClip(1.0);
         camera.setFarClip(5000.0);
         camera.setRotationAxis(Rotate.X_AXIS);
         camera.setRotate(20);
-        scene.setCamera(camera);
+        controller.getScene().setCamera(camera);
 
 
-        stage.setScene(scene);
+        stage.setScene(controller.getScene());
         stage.setWidth(x);
         stage.setHeight(y);
         stage.setTitle("Let's play Tarot!");
@@ -110,11 +112,10 @@ public class View extends Application {
 
         JeuCarte cardGame = controller.getCardGame();
 
-        //g.getChildren().addAll(board.getNodes());
 
         for(Carte e : cardGame)
         {
-            groupCard.getChildren().addAll(e.getNodes());
+            controller.getGroupCard().getChildren().addAll(e.getNodes());
         }
 
         stage.show();
@@ -149,12 +150,6 @@ public class View extends Application {
 
         EventHandler onFinishedSort = controller.sort;
 
-
-        controller.getPriseButton().setOnAction(controller.actionButtonPrise);
-        controller.getPasseButton().setOnAction(controller.actionButtonPasse);
-        controller.getFiniButton().setOnAction(controller.actionButtonFini);
-
-
         stage.show();
 
         KeyFrame keyFrame = new KeyFrame(duration, onFinished);
@@ -172,6 +167,7 @@ public class View extends Application {
 
         SequentialTransition sequence = new SequentialTransition(timeline, timelineFlip, timelineSort);
         sequence.play();
+
     }
 
     public static void main(String[] args) {

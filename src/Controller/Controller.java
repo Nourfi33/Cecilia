@@ -9,37 +9,79 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import Model.Carte;
+import View.Carte;
 
-
-/*
- * Nom de classe : Controller
- *
- * Description   : La classe gère tous les événements de la classe View
- *
- * Version       : 4.0
- *
- * Date          : 15/11/2016
- *
- * Copyright     : Julien Germanaud et Nicolas Gras
- */
 
 public class Controller {
 
-    View view = new View();
-
     Group groupCard = new Group();
     Group groupButton = new Group();
-
     Group groupMyCards = new Group();
 
-    public Stage stage = new Stage();
+    Stage stage;
 
-    public Scene scene;
+    Scene scene;
+
+    Button PriseButton = new Button();
+    Button GardeButton = new Button();
+    Button GardeSansButton = new Button();
+    Button GardeContreButton = new Button();
+    Button PassButton = new Button();
+    Button FiniButton = new Button();
+
+    public Button getGardeSansButton() {
+        return GardeSansButton;
+    }
+
+    public Button getGardeContreButton() {
+        return GardeContreButton;
+    }
+
+    public Group getGroupCard() {
+        return groupCard;
+    }
+
+    public Group getGroupButton() {
+        return groupButton;
+    }
+
+    public Group getGroupMyCards() {
+        return groupMyCards;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public Button getPriseButton() {
+        return PriseButton;
+    }
+
+    public Button getGardeButton() {
+        return GardeButton;
+    }
+
+    public Button getPassButton() {
+        return PassButton;
+    }
+
+    public Button getFiniButton() {
+        return FiniButton;
+    }
 
     int cptDog = 0;
+    int dogX=110;
 
     JeuCarte cardGame = new JeuCarte();
 
@@ -49,45 +91,20 @@ public class Controller {
     Player player4 = new Player(4);
     Player dog = new Player(5);
 
-    Button PriseButton = new Button();
-    Button PasseButton = new Button();
-    Button FiniButton = new Button();
-
-    public Group getGroupMyCards() {
-        return groupMyCards;
-    }
-
-    public Group getGroupButton() {
-        return groupButton;
-    }
-
-    public Group getGroupCard() {
-        return groupCard;
-    }
 
     public JeuCarte getCardGame() {
         return cardGame;
     }
 
-    public Button getPriseButton() {
-        return PriseButton;
-    }
 
-    public Button getPasseButton() {
-        return PasseButton;
-    }
-
-    public Button getFiniButton() {
-        return FiniButton;
-    }
-
+    /**
+     * Create a controller. *
+     * @param model
+     * The model. */
     public Controller() {
 
     }
 
-    /**
-     *  La méhode permet de distribuer les cartes à chaque joueur
-     */
     public EventHandler distribute = new EventHandler<ActionEvent>() {
 
         @Override
@@ -117,10 +134,6 @@ public class Controller {
         }
     };
 
-    /**
-     *  La méthode permet de retourner les cartes du joueur
-     *  FACE CACHE ==> FACE RETOURNE
-     */
     public EventHandler flip =  new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
             if(cardGame.getCptF()<18){
@@ -130,9 +143,6 @@ public class Controller {
         }
     };
 
-    /**
-     *  La méthode trie les cartes
-     */
     public EventHandler sort = new EventHandler<ActionEvent>() {
         public void handle(ActionEvent t) {
 
@@ -142,24 +152,22 @@ public class Controller {
 
             for(Carte e: cardGame){
                 for(int i=0; i<me.getMesCartes().size(); i++){
-
                     if(e.id() == me.getMesCartes().get(i).id()){
-                        cardGame.get(j).move((int) me.getMesCartes().get(i).x-me.getMesCartes().get(i).w, (int) me.getMesCartes().get(i).y-me.getMesCartes().get(i).h).play();
+                        cardGame.get(j).move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y).play();
                     }
                 }
                 j++;
             }
             groupButton.getChildren().add(PriseButton);
-            groupButton.getChildren().add(PasseButton);
+            groupButton.getChildren().add(GardeButton);
+            groupButton.getChildren().add(GardeSansButton);
+            groupButton.getChildren().add(GardeContreButton);
+            groupButton.getChildren().add(PassButton);
             groupButton.getChildren().add(FiniButton);
             stage.show();
         }
     };
 
-    /**
-     *  Méthode qui se lance quand l'utilisateur appuie
-     *  sur le bouton Prise. Elle permet de réalisée l'écart
-     */
     public EventHandler actionButtonPrise = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -168,17 +176,13 @@ public class Controller {
             stage.show();
 
             cardGame.TakeDog(dog.getMesCartes(), me, cardGame.getTransX(), cardGame.getTransY());
-            stage.show();
-
-            int j = 0;
 
             for (Carte e : cardGame) {
                 for (int i = 0; i < me.getMesCartes().size(); i++) {
                     if (e.id() == me.getMesCartes().get(i).id()) {
-                        cardGame.get(j).move((int) me.getMesCartes().get(i).x-100, (int) me.getMesCartes().get(i).y-200).play();
+                        e.move((int) me.getMesCartes().get(i).x, (int) me.getMesCartes().get(i).y-200).play();
                     }
                 }
-                j++;
             }
 
             scene.addEventHandler(MouseEvent.MOUSE_PRESSED, ridOf);
@@ -186,69 +190,86 @@ public class Controller {
         }
     };
 
-    /**
-     *  Méthode qui permet de sélectionner les 6 cartes pour reconstituer le chien,
-     *  une fois pris
-     */
     public EventHandler ridOf = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseE) {
 
-            /*int j = 0;
-
             for (Carte e : cardGame) {
-                for (int i = 0; i < me.getMesCartes().size(); i++) {
-                    if((mouseE.getX() >= me.getMesCartes().get(i).x) && (mouseE.getX() <= me.getMesCartes().get(i).x+me.getMesCartes().get(i).w) && (mouseE.getY() >= me.getMesCartes().get(i).y) && (mouseE.getY() <= me.getMesCartes().get(i).y+me.getMesCartes().get(i).h)){
-                        System.out.println("oui");
-                        cardGame.get(j).move(100, 200).play();
+                if (cptDog < 6) {
+                    if ((mouseE.getX() >= e.x-e.w/2) && (mouseE.getX() <= e.x-e.w/2 + e.w) &&
+                            (mouseE.getY() >= e.y-e.h/2) && (mouseE.getY() <= e.y-e.h/2 + e.h)) {
+                        if(e.id()!=14 && e.id()!=28 && e.id()!=29 && e.id()!=49 && e.id()!=63 && e.id()!=77 && e.id()!=78){
+                            e.move(dogX, 0).play();
+                            dogX += 110;
+                            cptDog++;
+                            for (int i = 0; i < me.getMesCartes().size(); i++) {
+                                if (e.id() == me.getMesCartes().get(i).id()) {
+                                    me.getMesCartes().remove(i);
+                                    dog.getMesCartes().add(e);
+                                }
+                            }
+                        }
+
                     }
                 }
-                j++;
-            }*/
-
-            System.out.println(mouseE.getX());
-            System.out.println(mouseE.getY());
-
-
-
-            for(int i=0; i<me.getMesCartes().size(); i++)
-            {
-                if((mouseE.getX() >= me.getMesCartes().get(i).x) && (mouseE.getX() <= me.getMesCartes().get(i).x+me.getMesCartes().get(i).w) && (mouseE.getY() <= me.getMesCartes().get(i).y) && (mouseE.getY() >= me.getMesCartes().get(i).y+me.getMesCartes().get(i).h)){
-                    System.out.println("oui");
-                    me.getMesCartes().get(i).move(100,100).play();
-                }
-                //if(i!=29 && i!=49 && i!=78)
             }
 
-            /*if(cptDog < 6) {
-                groupCard.getChildren().remove(mouseE.getSource());
-                cptDog++;
-            }*/
-
+            if(cptDog==6){
+                groupButton.getChildren().add(FiniButton);
+                mouseE.consume();
+            }
             stage.show();
-
         }
     };
 
 
-    /**
-     *  Méthode qui se lance quand l'utilisateur appuie
-     *  sur le bouton Passe. Elle permet de relancer la distribution
-     */
-    public EventHandler actionButtonPasse =  new EventHandler<ActionEvent>() {
+    public EventHandler actionButtonPass =  new EventHandler<ActionEvent>() {
         @Override
-        public void handle(ActionEvent event) {
+        public void handle(ActionEvent event){
             stage.close();
-            Stage newStage = new Stage();
-            Platform.runLater( () -> new View().start( newStage ));
+            Platform.runLater( () -> new View().start( new Stage() ));
         }
     };
 
-    /**
-     *  Méthode qui se lance quand l'utilisateur appuie
-     *  sur le bouton Distribution Finie. Elle permet de quitter la distribution
-     */
-    public EventHandler actionButtonFini =  new EventHandler<ActionEvent>() {
+    public EventHandler actionButtonGardeSans =  new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event){
+
+            groupButton.getChildren().clear();
+
+            for (Carte e : cardGame) {
+                for (int i = 0; i < dog.getMesCartes().size(); i++) {
+                    if (e.id() == dog.getMesCartes().get(i).id()) {
+                        e.move(1200, 200).play();
+                    }
+                }
+            }
+
+            groupButton.getChildren().add(FiniButton);
+            stage.show();
+        }
+    };
+
+    public EventHandler actionButtonGardeContre =  new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event){
+
+            groupButton.getChildren().clear();
+
+            for (Carte e : cardGame) {
+                for (int i = 0; i < dog.getMesCartes().size(); i++) {
+                    if (e.id() == dog.getMesCartes().get(i).id()) {
+                        e.move(-300, -300).play();
+                    }
+                }
+            }
+
+            groupButton.getChildren().add(FiniButton);
+            stage.show();
+        }
+    };
+
+    public EventHandler actionButtonFini = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
             Platform.exit();
