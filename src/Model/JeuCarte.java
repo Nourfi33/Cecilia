@@ -25,10 +25,13 @@ public class JeuCarte extends ArrayList<Carte> {
     private int transX = 110;
     private int transY = 400;
     private int player = 1;
+    // position
     private int pos = 0;
 
     private Integer cpt = 1;
+    // cpt chien
     private Integer cptC = 1;
+    // cpt flip
     private Integer cptF = 0;
 
     public int getTransX() {
