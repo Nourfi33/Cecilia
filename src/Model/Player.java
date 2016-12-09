@@ -40,7 +40,6 @@ public class Player {
         double tabX[] = new double[mesCartes.size()];
         double tabY[] = new double[mesCartes.size()];
 
-
         for(Carte e: mesCartes){
             tab[i] = Integer.valueOf(e.id);
             tabX[i] = e.x;
